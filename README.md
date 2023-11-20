@@ -9,7 +9,7 @@ I use [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) with the [App of Apps 
 ### Usage
 Starting the container
 ```
-podman run -- privileged <image>
+podman run --privileged --device=/dev/fuse docker.io/procinger/kind-in-podman:latest
 ```
 This command starts a KIND setup with the following settings
 ```
@@ -26,7 +26,7 @@ networking:
 
 ### Connect to the cluster
 ``` 
-podman run --privileged -p 6443:6443 $(pwd)/kubeconfig:/root/.kube/config <image>
+podman run --privileged --device=/dev/fuse -p 6443:6443 $(pwd)/kubeconfig:/root/.kube/config docker.io/procinger/kind-in-podman:latest
 ```
 In the mounted kubeconfig file, the server address must be adjusted to\
 `server: https://0.0.0.0:6443`\

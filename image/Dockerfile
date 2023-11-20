@@ -1,4 +1,3 @@
-# sudo sysctl -w user.max_user_namespaces=72423
 FROM ubuntu:22.04
 
 USER root
@@ -36,21 +35,6 @@ RUN curl -Lo /usr/bin/kubectl https://dl.k8s.io/release/$(curl -L -s https://dl.
 
 COPY rootfs/ /
 
-#RUN useradd -s /bin/bash -d /home/kind/ -m kind && \
-#    chown -R kind:kind /home/kind && \
-#    echo kind:10000:5000 > /etc/subuid && \
-#    echo kind:10000:5000 > /etc/subgid
-
-#USER kind
-#WORKDIR /home/kind
-
 VOLUME /var/lib/containers
-#VOLUME /home/kind/.local/share/containers
 
 ENTRYPOINT ["/create-cluster.sh"]
-#CMD ["create", "cluster", "--config", "/kind-in-podman.yaml"]
-
-# 65534 - ( 10000 + 5000 - 1)
-# 1001020000 - (100000 + 65536 - 1) = 1000854465
-
-# podman run --rm  -ti -v $(pwd)/kubeconfig:/root/.kube/config -p 6443:6443 --cap-add=sys_admin,mknod,net_admin --device=/dev/fuse --security-opt="label=disable" --entrypoint=bash localhost/kind-in-podman:latest
