@@ -7,3 +7,9 @@ networking:
   ipFamily: ipv4
   apiServerPort: 6443
   apiServerAddress: 0.0.0.0
+nodes:
+  - role: control-plane
+    extraMounts:
+      # quick hack to fix missing directory in kind
+      - hostPath: /var/lib/containerd/io.containerd.snapshotter.v1.fuse-overlayfs
+        containerPath: /var/lib/containerd/io.containerd.snapshotter.v1.fuse-overlayfs

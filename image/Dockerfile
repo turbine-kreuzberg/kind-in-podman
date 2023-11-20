@@ -19,6 +19,7 @@ RUN mkdir -p /etc/apt/keyrings && \
 
 RUN cp /usr/share/containers/storage.conf /etc/containers/storage.conf && \
     mkdir -p /var/lib/shared && \
+    mkdir -p /var/lib/containerd/io.containerd.snapshotter.v1.fuse-overlayfs && \
     sed -i -e 's|^#mount_program|mount_program|g' \
       -e '/additionalimage.*/a "/var/lib/shared",' \
     #      -e 's|^#ignore_chown_errors.*|ignore_chown_errors = "true"|' \
@@ -35,6 +36,6 @@ RUN curl -Lo /usr/bin/kubectl https://dl.k8s.io/release/$(curl -L -s https://dl.
 
 COPY rootfs/ /
 
-VOLUME /var/lib/containers
+#VOLUME /var/lib/containers
 
 ENTRYPOINT ["/create-cluster.sh"]
