@@ -13,9 +13,10 @@ kind:
   script:
     - buildah manifest create ${MANIFEST_NAME}
     - buildah bud
-      --tag "docker.io/procinger/tcpdump:latest"
+      --file image/Dockerfile
+      --tag "docker.io/procinger/kind-in-podman:latest"
       --manifest ${MANIFEST_NAME}
       --arch amd64
-      .
+      image/
     - echo -n ${DOCKER_TOKEN} | buildah login -u ${DOCKER_USERNAME} --password-stdin docker.io
     - buildah manifest push --all ${MANIFEST_NAME} "docker://docker.io/procinger/kind-in-podman:latest"
