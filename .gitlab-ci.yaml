@@ -1,0 +1,21 @@
+variables:
+  MANIFEST_NAME:  "kind-in-podman"
+stages:
+  - build and push
+
+kind:
+  stage: build and push
+  image: docker.io/procinger/alpine:3.18
+  before_script:
+    - apk add --no-cache fuse-overlayfs buildah podman cni-plugins
+    - sed -i 's/#mount_program/mount_program/' /etc/containers/storage.conf
+    - podman system reset --force
+  script:
+    - buildah manifest create ${MANIFEST_NAME}
+    - buildah bud
+      --tag "docker.io/procinger/tcpdump:latest"
+      --manifest ${MANIFEST_NAME}
+      --arch amd64
+      .
+    - echo -n ${DOCKER_TOKEN} | buildah login -u ${DOCKER_USERNAME} --password-stdin docker.io
+    - buildah manifest push --all ${MANIFEST_NAME} "docker://docker.io/procinger/kind-in-podman:latest"
