@@ -1,6 +1,6 @@
 # Kind in Podman
 
-This repository builds a Podman OCI image based on Ubuntu. Various Podman configurations have been made to use [KIND](https://kind.sigs.k8s.io/) in this image.
+This repository builds a Podman OCI image based on Ubuntu to start a [KIND](https://kind.sigs.k8s.io/) K8S Cluster.
 
 ### Motivation
 

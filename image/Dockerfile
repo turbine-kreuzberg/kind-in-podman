@@ -29,7 +29,6 @@ RUN cp /usr/share/containers/storage.conf /etc/containers/storage.conf && \
     chmod 4755 /usr/bin/newgidmap && \
     chmod 4755 /usr/bin/newuidmap
 
-COPY rootfs/etc/containers /etc/containers
 COPY rootfs/lib/modules /lib/modules
 
 RUN curl -Lo /usr/bin/kind https://kind.sigs.k8s.io/dl/v0.20.0/kind-linux-amd64 && \
