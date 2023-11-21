@@ -25,8 +25,10 @@ RUN cp /usr/share/containers/storage.conf /etc/containers/storage.conf && \
     #      -e 's|^#ignore_chown_errors.*|ignore_chown_errors = "true"|' \
       -e 's|^mountopt[[:space:]]*=.*$|mountopt = "nodev,fsync=0"|g' /etc/containers/storage.conf && \
     chmod 4755 /usr/bin/newgidmap && \
-    chmod 4755 /usr/bin/newuidmap
+    chmod 4755 /usr/bin/newuidmap \
 
+COPY rootfs/etc/containers /etc/containers
+COPY rootfs/lib/modules /lib/modules
 
 RUN curl -Lo /usr/bin/kind https://kind.sigs.k8s.io/dl/v0.20.0/kind-linux-amd64 && \
     chmod +x /usr/bin/kind
@@ -34,6 +36,8 @@ RUN curl -Lo /usr/bin/kind https://kind.sigs.k8s.io/dl/v0.20.0/kind-linux-amd64 
 RUN curl -Lo /usr/bin/kubectl https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl && \
     chmod +x /usr/bin/kubectl
 
-COPY rootfs/ /
+COPY rootfs/create-cluster.sh /create-cluster.sh
+COPY rootfs/kind-in-podman.yaml /kind-in-podman.yaml
+
 
 ENTRYPOINT ["/create-cluster.sh"]
