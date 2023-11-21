@@ -17,6 +17,6 @@ kind:
       --tag "docker.io/procinger/kind-in-podman:latest"
       --manifest ${MANIFEST_NAME}
       --arch amd64
-      image/
+      ./image/
     - echo -n ${DOCKER_TOKEN} | buildah login -u ${DOCKER_USERNAME} --password-stdin docker.io
     - buildah manifest push --all ${MANIFEST_NAME} "docker://docker.io/procinger/kind-in-podman:latest"
