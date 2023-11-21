@@ -1,6 +1,8 @@
 FROM ubuntu:22.04
 
 USER root
+ENV KIND_EXPERIMENTAL_PROVIDER=podman
+
 RUN apt update && \
     apt dist-upgrade -y && \
     apt install gpg curl lsb-release sudo vim -y
