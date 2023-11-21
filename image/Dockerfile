@@ -27,7 +27,7 @@ RUN cp /usr/share/containers/storage.conf /etc/containers/storage.conf && \
     #      -e 's|^#ignore_chown_errors.*|ignore_chown_errors = "true"|' \
       -e 's|^mountopt[[:space:]]*=.*$|mountopt = "nodev,fsync=0"|g' /etc/containers/storage.conf && \
     chmod 4755 /usr/bin/newgidmap && \
-    chmod 4755 /usr/bin/newuidmap \
+    chmod 4755 /usr/bin/newuidmap
 
 COPY rootfs/etc/containers /etc/containers
 COPY rootfs/lib/modules /lib/modules
