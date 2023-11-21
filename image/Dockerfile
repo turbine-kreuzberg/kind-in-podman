@@ -36,6 +36,4 @@ RUN curl -Lo /usr/bin/kubectl https://dl.k8s.io/release/$(curl -L -s https://dl.
 
 COPY rootfs/ /
 
-#VOLUME /var/lib/containers
-
 ENTRYPOINT ["/create-cluster.sh"]
