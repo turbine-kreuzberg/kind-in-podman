@@ -6,7 +6,8 @@ featureGates:
 networking:
   ipFamily: ipv4
   apiServerPort: 6443
-  apiServerAddress: 0.0.0.0
+  apiServerAddress: 127.0.0.1
+  podSubnet: "11.244.0.0/16"
 nodes:
   - role: control-plane
     extraMounts:
