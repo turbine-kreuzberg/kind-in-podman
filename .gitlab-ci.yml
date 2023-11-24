@@ -1,14 +1,24 @@
 stages:
-  - build and push
+  - build
+  - test
 
-kind:
-  stage: build and push
+kind tooling:
+  stage: build
   image: docker.io/procinger/alpine:3.18
   before_script:
     - apk add --no-cache fuse-overlayfs podman cni-plugins
     - sed -i 's/#mount_program/mount_program/' /etc/containers/storage.conf
     - podman system reset --force
   script:
-    - podman build --format docker -f image/Dockerfile -t kind-in-podman:latest ./image
-    - echo -n ${DOCKER_TOKEN} | podman login -u ${DOCKER_USERNAME} --password-stdin docker.io
-    - podman push kind-in-podman:latest "docker://docker.io/procinger/kind-in-podman:latest"
+    - podman build --format docker -f image/Containerfile -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} ./image
+    - podman login -u "${CI_REGISTRY_USER}" -p "${CI_REGISTRY_PASSWORD}" ${CI_REGISTRY}
+    - podman push ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}
+
+nginx deployment in kind:
+  stage: test
+  image: procinger/kind-in-podman:latest
+  script:
+    - kind create cluster --config ./test/kind-in-podman.yaml
+    - kubectl get no -o wide
+    - kubectl get ns
+    - cd ./test && go test . -v

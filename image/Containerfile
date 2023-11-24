@@ -37,8 +37,6 @@ RUN curl -Lo /usr/bin/kind https://kind.sigs.k8s.io/dl/v0.20.0/kind-linux-amd64 
 RUN curl -Lo /usr/bin/kubectl https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl && \
     chmod +x /usr/bin/kubectl
 
-COPY rootfs/create-cluster.sh /create-cluster.sh
-COPY rootfs/kind-in-podman.yaml /kind-in-podman.yaml
-
-
-ENTRYPOINT ["/create-cluster.sh"]
+RUN curl -Lo /tmp/go.tar.gz https://go.dev/dl/go1.21.4.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf /tmp/go.tar.gz
+ENV PATH=$PATH:/usr/local/go/bin
