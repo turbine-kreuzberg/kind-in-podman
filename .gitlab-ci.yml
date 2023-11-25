@@ -16,9 +16,16 @@ kind tooling:
 
 nginx deployment in kind:
   stage: test
-  image: procinger/kind-in-podman:latest
+  image: docker.io/procinger/kind-in-podman:latest
   script:
-    - kind create cluster --config ./test/kind-in-podman.yaml
-    - kubectl get no -o wide
-    - kubectl get ns
-    - cd ./test && go test . -v
+    - podman login -u "${CI_REGISTRY_USER}" -p "${CI_REGISTRY_PASSWORD}" ${CI_REGISTRY}
+    - mkdir -p /tmp/${CI_COMMIT_SHA}/containers
+    - podman run --rm
+      -v /tmp/${CI_COMMIT_SHA}/containers:/var/lib/containers/storage:Z
+      -v $(pwd)/test:/test
+      --privileged
+      --security-opt="label=disable" ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}
+      /bin/sh -c "/usr/bin/kind create cluster --config ./test/kind-in-podman.yaml
+      && kubectl get no -o wide
+      && kubectl get ns
+      && cd ./test && go test . -v"
