@@ -16,30 +16,4 @@ ip6table_nat
 ```
 
 ### Usage
-Starting the container
-```
-podman run --privileged docker.io/procinger/kind-in-podman:latest
-```
-This command starts a KIND setup with the following settings
-```
-kind: Cluster
-apiVersion: kind.x-k8s.io/v1alpha4
-name: kind-in-podman
-featureGates:
-  KubeletInUserNamespace: true
-networking:
-  ipFamily: ipv4
-  apiServerPort: 6443
-  apiServerAddress: 0.0.0.0
-```
-
-### Connect to the cluster
-``` 
-podman run --privileged -p 6443:6443 $(pwd)/kubeconfig:/root/.kube/config docker.io/procinger/kind-in-podman:latest
-```
-In the mounted kubeconfig file, the server address must be adjusted to\
-`server: https://0.0.0.0:6443`\
-Testing the connection
-```
-kubectl  --kubeconfig kubeconfig get nodes
-```
+@TODO
