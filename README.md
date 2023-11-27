@@ -8,7 +8,7 @@ I use [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) with the [App of Apps 
 
 ### Requirements
 
-Cgroups V2
+Cgroups V2\
 IPv6 Kernel Modules
 ```
 ip6_tables
