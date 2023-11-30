@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - publish
 
 kind tooling:
   stage: build
@@ -29,3 +30,15 @@ nginx deployment in kind:
       && kubectl get no -o wide
       && kubectl get ns
       && cd ./test && go test . -v"
+
+docker:
+  stage: publish
+  image: docker.io/procinger/alpine:3.18
+  script:
+    - podman login -u "${CI_REGISTRY_USER}" -p "${CI_REGISTRY_PASSWORD}" ${CI_REGISTRY}
+    - podman pull ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}
+    - echo -n ${DOCKER_TOKEN} | podman login -u ${DOCKER_USERNAME} --password-stdin docker.io
+    - podman tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} procinger/kind-in-podman:latest
+    - podman push procinger/kind-in-podman:latest docker://docker.io/procinger/kind-in-podman:latest
+  only:
+    - main
