@@ -1,0 +1,17 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    ":autodetectPinVersions",
+    "group:monorepos",
+    "group:symfony",
+    "workarounds:typesNodeVersioning",
+    "workarounds:reduceRepologyServerLoad",
+    "workarounds:doNotUpgradeFromAlpineStableToEdge",
+    "docker:pinDigests"
+  ],
+  "prConcurrentLimit": 3,
+  "automerge": false,
+  "automergeType": "pr",
+  "platformAutomerge": false,
+  "labels": ["bot"]
+}
