@@ -11,8 +11,8 @@
     ":dependencyDashboard"
   ],
   "prConcurrentLimit": 3,
-  "automerge": false,
+  "automerge": true,
   "automergeType": "pr",
-  "platformAutomerge": false,
+  "platformAutomerge": true,
   "labels": ["bot"]
 }
