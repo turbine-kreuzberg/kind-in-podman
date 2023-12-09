@@ -17,7 +17,7 @@ kind tooling:
 
 nginx deployment in kind:
   stage: test
-  image: docker.io/procinger/kind-in-podman:latest@sha256:d670faee5a04fb5299c8eb4a4cc6f951eb2685330a7fa6202446e281e846a3a4
+  image: docker.io/procinger/kind-in-podman:latest@sha256:ba599b94d218515dd3002ee1c633ddcd742e7dbb01bcd9d264a1284eae184d0a
   script:
     - podman login -u "${CI_REGISTRY_USER}" -p "${CI_REGISTRY_PASSWORD}" ${CI_REGISTRY}
     - mkdir -p /tmp/${CI_COMMIT_SHA}/containers
