@@ -23,7 +23,7 @@ func TestMain(m *testing.M) {
 		envfuncs.CreateClusterWithConfig(
 			kind.NewProvider(),
 			kindClusterName,
-			"kind-config.yaml",
+			"kind-in-podman.yaml",
 			kind.WithImage("kindest/node:v1.27.3"),
 		),
 		envfuncs.CreateNamespace(namespace),
