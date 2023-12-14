@@ -80,10 +80,11 @@ func TestKindCluster(t *testing.T) {
 					t.Fatal("could not find any pod in the namespace ", namespace)
 				}
 
-				pod := podList.Items[0]
-				err = wait.For(
-					conditions.New(client.Resources().WithNamespace(namespace)).PodReady(&pod), wait.WithTimeout(time.Minute*2),
-				)
+				for i := range podList.Items {
+					err = wait.For(
+						conditions.New(client.Resources().WithNamespace(namespace)).PodReady(&podList.Items[i]), wait.WithTimeout(time.Minute*2),
+					)
+				}
 
 				return ctx
 			}).
