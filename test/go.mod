@@ -1,6 +1,6 @@
 module test
 
-go 1.21.5
+go 1.21.6
 
 require (
 	k8s.io/api v0.29.0
