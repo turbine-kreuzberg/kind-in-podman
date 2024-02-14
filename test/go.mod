@@ -3,8 +3,8 @@ module test
 go 1.22.0
 
 require (
-	k8s.io/api v0.29.1
-	k8s.io/apimachinery v0.29.1
+	k8s.io/api v0.29.2
+	k8s.io/apimachinery v0.29.2
 	sigs.k8s.io/e2e-framework v0.3.0
 )
 
