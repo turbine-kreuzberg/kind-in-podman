@@ -5,7 +5,7 @@ stages:
 
 kind tooling:
   stage: build
-  image: docker.io/procinger/alpine:3.18@sha256:e5a4a5c6dc5e9a7bec959c2e471567eb0f9f5c27cd7797b9d26a2a9d1b451440
+  image: docker.io/procinger/alpine:3.18@sha256:ef47afd9c0aeaf6d9549aa930c62a9fb96a1983c7575000d8fd7a2b663a4b99d
   before_script:
     - apk add --no-cache fuse-overlayfs podman cni-plugins
     - sed -i 's/#mount_program/mount_program/' /etc/containers/storage.conf
@@ -17,7 +17,7 @@ kind tooling:
 
 nginx deployment in kind:
   stage: test
-  image: docker.io/procinger/alpine:3.18@sha256:e5a4a5c6dc5e9a7bec959c2e471567eb0f9f5c27cd7797b9d26a2a9d1b451440
+  image: docker.io/procinger/alpine:3.18@sha256:ef47afd9c0aeaf6d9549aa930c62a9fb96a1983c7575000d8fd7a2b663a4b99d
   before_script:
     - apk add --no-cache fuse-overlayfs podman cni-plugins
     - sed -i 's/#mount_program/mount_program/' /etc/containers/storage.conf
@@ -37,7 +37,7 @@ nginx deployment in kind:
 
 docker hub:
   stage: publish
-  image: docker.io/procinger/alpine:3.18@sha256:e5a4a5c6dc5e9a7bec959c2e471567eb0f9f5c27cd7797b9d26a2a9d1b451440
+  image: docker.io/procinger/alpine:3.18@sha256:ef47afd9c0aeaf6d9549aa930c62a9fb96a1983c7575000d8fd7a2b663a4b99d
   before_script:
     - apk add --no-cache fuse-overlayfs podman cni-plugins
   script:
