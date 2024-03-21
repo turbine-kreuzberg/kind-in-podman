@@ -2,11 +2,12 @@ package test
 
 import (
 	"os"
+	"testing"
+
 	"sigs.k8s.io/e2e-framework/pkg/env"
 	"sigs.k8s.io/e2e-framework/pkg/envconf"
 	"sigs.k8s.io/e2e-framework/pkg/envfuncs"
 	"sigs.k8s.io/e2e-framework/support/kind"
-	"testing"
 )
 
 var (
@@ -16,7 +17,7 @@ var (
 )
 
 func TestMain(m *testing.M) {
-	kindClusterName := "kind-in-podman"
+	kindClusterName := "kind"
 	testenv = env.New()
 
 	testenv.Setup(

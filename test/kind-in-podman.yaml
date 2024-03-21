@@ -1,6 +1,6 @@
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
-name: kind-in-podman
+name: kind
 featureGates:
   KubeletInUserNamespace: true
 networking:
@@ -8,9 +8,6 @@ networking:
   apiServerPort: 6443
   apiServerAddress: 127.0.0.1
   podSubnet: "11.244.0.0/16"
+  serviceSubnet: "10.0.0.0/20"
 nodes:
   - role: control-plane
-    extraMounts:
-      # quick hack to fix missing directory in kind
-      - hostPath: /var/lib/containerd/io.containerd.snapshotter.v1.fuse-overlayfs
-        containerPath: /var/lib/containerd/io.containerd.snapshotter.v1.fuse-overlayfs
