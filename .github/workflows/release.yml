@@ -1,0 +1,12 @@
+name: A
+
+on:
+  pull_request:
+  merge_group:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: B
+      uses: actions/checkout@v4
