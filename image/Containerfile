@@ -40,13 +40,13 @@ RUN cp /usr/share/containers/storage.conf /etc/containers/storage.conf && \
 
 # kind
 ENV KIND_EXPERIMENTAL_PROVIDER=podman
-COPY --from downloader /usr/bin/kind /usr/bin/kind
+COPY --from=downloader /usr/bin/kind /usr/bin/kind
 
 # kubectl
-COPY --from downloader /usr/bin/kubectl /usr/bin/kubectl
+COPY --from=downloader /usr/bin/kubectl /usr/bin/kubectl
 
 # golang
-COPY --from downloader /usr/local/go /usr/local/go
+COPY --from=downloader /usr/local/go /usr/local/go
 ENV PATH=$PATH:/usr/local/go/bin
 
 RUN kind --version
