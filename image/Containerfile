@@ -1,12 +1,12 @@
 FROM ubuntu:23.10
-VOLUME /var/lib/containers/storage
 
 USER root
 
 RUN apt update && \
     apt dist-upgrade -y && \
-    apt install gpg curl lsb-release sudo vim fuse-overlayfs podman containers-storage -y && \
+    apt install gpg curl lsb-release sudo vim fuse-overlayfs podman containers-storage uidmap ca-certificates --yes --no-install-recommends && \
     apt clean
+VOLUME /var/lib/containers/storage
 
 RUN cp /usr/share/containers/storage.conf /etc/containers/storage.conf && \
     mkdir -p /var/lib/shared && \
