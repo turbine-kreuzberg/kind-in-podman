@@ -5,7 +5,7 @@ USER root
 
 RUN apt update && \
     apt dist-upgrade -y && \
-    apt install gpg curl lsb-release sudo vim fuse-overlayfs podman containers-storage -y &&
+    apt install gpg curl lsb-release sudo vim fuse-overlayfs podman containers-storage -y && \
     apt clean
 
 RUN cp /usr/share/containers/storage.conf /etc/containers/storage.conf && \
