@@ -42,7 +42,7 @@ jobs:
         -v $(pwd)/test:/test
         --privileged
         --security-opt="label=disable" ${{ env.TEST_IMAGE }}
-        /bin/sh -c "/usr/bin/kind create cluster -v 2147483647 --config ./test/kind-in-podman.yaml --wait 60s
+        /bin/sh -c "(/usr/bin/kind create cluster -v 2147483647 --config ./test/kind-in-podman.yaml --wait 60s --retain || (cat $(kind export logs) && podman ps -a))
         && kubectl get no -o wide
         && kubectl get ns
         && cd ./test && go test . -v"
