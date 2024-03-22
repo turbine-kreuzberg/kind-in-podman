@@ -28,11 +28,7 @@ RUN apt update && \
 VOLUME /var/lib/containers/storage
 
 RUN cp /usr/share/containers/storage.conf /etc/containers/storage.conf && \
-    mkdir -p /var/lib/shared && \
-    mkdir -p /var/lib/containerd/io.containerd.snapshotter.v1.fuse-overlayfs && \
     sed -i -e 's|^#mount_program|mount_program|g' \
-      -e '/additionalimage.*/a "/var/lib/shared",' \
-    #      -e 's|^#ignore_chown_errors.*|ignore_chown_errors = "true"|' \
       -e 's|^mountopt[[:space:]]*=.*$|mountopt = "nodev,fsync=0"|g' /etc/containers/storage.conf && \
     chmod 4755 /usr/bin/newgidmap && \
     chmod 4755 /usr/bin/newuidmap && \
