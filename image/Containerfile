@@ -23,7 +23,7 @@ USER root
 
 RUN apt update && \
     apt dist-upgrade -y && \
-    apt install fuse-overlayfs podman containers-storage uidmap ca-certificates --yes --no-install-recommends && \
+    apt install fuse-overlayfs podman containers-storage ca-certificates --yes --no-install-recommends && \
     apt clean
 VOLUME /var/lib/containers/storage
 
