@@ -30,8 +30,6 @@ VOLUME /var/lib/containers/storage
 RUN cp /usr/share/containers/storage.conf /etc/containers/storage.conf && \
     sed -i -e 's|^#mount_program|mount_program|g' \
       -e 's|^mountopt[[:space:]]*=.*$|mountopt = "nodev,fsync=0"|g' /etc/containers/storage.conf && \
-    chmod 4755 /usr/bin/newgidmap && \
-    chmod 4755 /usr/bin/newuidmap && \
     mkdir -p /lib/modules
 
 # kind
