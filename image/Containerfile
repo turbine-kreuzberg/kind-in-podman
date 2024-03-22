@@ -29,8 +29,6 @@ RUN cp /usr/share/containers/storage.conf /etc/containers/storage.conf && \
     chmod 4755 /usr/bin/newgidmap && \
     chmod 4755 /usr/bin/newuidmap
 
-COPY rootfs/lib/modules /lib/modules
-
 # kind
 ENV KIND_VERSION=v0.22.0
 ENV KIND_EXPERIMENTAL_PROVIDER=podman
