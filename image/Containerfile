@@ -30,12 +30,13 @@ VOLUME /var/lib/containers/storage
 RUN cp /usr/share/containers/storage.conf /etc/containers/storage.conf && \
     sed -i -e 's|^#mount_program|mount_program|g' \
       # -e 's|^mountopt[[:space:]]*=.*$|mountopt = "nodev,fsync=0"|g' \
-      /etc/containers/storage.conf && \
-    mkdir -p /lib/modules
+      /etc/containers/storage.conf
 
 # kind
 ENV KIND_EXPERIMENTAL_PROVIDER=podman
 COPY --from=downloader /usr/bin/kind /usr/bin/kind
+# nedded by deamonset kindnet
+RUN mkdir -p /lib/modules
 
 # kubectl
 COPY --from=downloader /usr/bin/kubectl /usr/bin/kubectl
