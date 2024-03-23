@@ -41,7 +41,6 @@ jobs:
 
     - name: Execute Tests
       run: >
-        go test -c 
         podman run --rm
         -v $(pwd)/test:/test
         --privileged
