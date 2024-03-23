@@ -20,6 +20,16 @@ jobs:
     - name: Clone repository
       uses: actions/checkout@v4
 
+    - name: Sysctl
+      run: |
+        sudo modprobe ip6_tables
+        sudo modprobe ip6table_nat
+        sudo modprobe ip_tables
+        sudo modprobe iptable_nat
+        sudo systemctl daemon-reload
+        sudo sysctl -a | sort -h
+        sudo uname -a
+
     - name: Configure
       run: |
         sudo apt update
@@ -31,17 +41,20 @@ jobs:
         sudo touch /etc/systemd/system/user@.service.d/delegate.conf
         echo [Service] | sudo tee -a /etc/systemd/system/user@.service.d/delegate.conf
         echo Delegate=yes | sudo tee -a /etc/systemd/system/user@.service.d/delegate.conf
-        sudo systemctl daemon-reload
+        sudo chmod 4755 /usr/bin/newgidmap
+        sudo chmod 4755 /usr/bin/newuidmap
 
     - name: Build Image
-      run: podman build --format docker -f image/Containerfile -t ${{ env.TEST_IMAGE }} ./image
+      run: docker build -f image/Containerfile -t ${{ env.TEST_IMAGE }} ./image
 
     - name: Execute Tests
       run: >
-        podman run --rm
+        docker run --rm
+        --network host
         -v $(pwd)/test:/test
         --privileged
-        --security-opt="label=disable" ${{ env.TEST_IMAGE }}
+        --security-opt="label=disable"
+        ${{ env.TEST_IMAGE }}
         /bin/sh -c "/usr/bin/kind create cluster -v 2147483647 --config ./test/kind-in-podman.yaml --wait 60s
         && kubectl get no -o wide
         && kubectl get ns
