@@ -45,9 +45,11 @@ jobs:
     - name: Execute Tests
       run: >
         docker run --rm
+        --network host
         -v $(pwd)/test:/test
         --privileged
-        --security-opt="label=disable" ${{ env.TEST_IMAGE }}
+        --security-opt="label=disable"
+        ${{ env.TEST_IMAGE }}
         /bin/sh -c "/usr/bin/kind create cluster -v 2147483647 --config ./test/kind-in-podman.yaml --wait 60s
         && kubectl get no -o wide
         && kubectl get ns
