@@ -20,19 +20,6 @@ jobs:
     - name: Clone repository
       uses: actions/checkout@v4
 
-    - name: Configure
-      run: |
-        sudo apt update
-        sudo apt install -y fuse-overlayfs podman containernetworking-plugins containers-storage
-        sudo cp /usr/share/containers/storage.conf /etc/containers/storage.conf
-        sudo sed -i 's/#mount_program/mount_program/' /etc/containers/storage.conf
-        sudo podman system reset --force
-        sudo mkdir -p /etc/systemd/system/user@.service.d/
-        sudo touch /etc/systemd/system/user@.service.d/delegate.conf
-        echo [Service] | sudo tee -a /etc/systemd/system/user@.service.d/delegate.conf
-        echo Delegate=yes | sudo tee -a /etc/systemd/system/user@.service.d/delegate.conf
-        sudo systemctl daemon-reload
-
     - name: Build Image
       run: docker build -f image/Containerfile -t ${{ env.TEST_IMAGE }} ./image
 
