@@ -25,6 +25,7 @@ RUN apt update && \
     apt dist-upgrade -y && \
     apt install podman containers-storage ca-certificates --yes --no-install-recommends && \
     apt clean
+VOLUME /var/lib/containers/storage
 
 RUN cp /usr/share/containers/storage.conf /etc/containers/storage.conf
 
