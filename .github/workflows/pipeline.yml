@@ -20,32 +20,28 @@ jobs:
     - name: Clone repository
       uses: actions/checkout@v4
 
-    - name: Configure
-      run: |
-        sudo apt update
-        sudo apt install -y fuse-overlayfs podman containernetworking-plugins containers-storage
-        sudo cp /usr/share/containers/storage.conf /etc/containers/storage.conf
-        sudo sed -i 's/#mount_program/mount_program/' /etc/containers/storage.conf
-        sudo podman system reset --force
-        sudo mkdir -p /etc/systemd/system/user@.service.d/
-        sudo touch /etc/systemd/system/user@.service.d/delegate.conf
-        echo [Service] | sudo tee -a /etc/systemd/system/user@.service.d/delegate.conf
-        echo Delegate=yes | sudo tee -a /etc/systemd/system/user@.service.d/delegate.conf
-        sudo systemctl daemon-reload
-
     - name: Build Image
-      run: podman build --format docker -f image/Containerfile -t ${{ env.TEST_IMAGE }} ./image
+      run: docker build -f image/Containerfile -t ${{ env.TEST_IMAGE }} ./image
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version-file: test/go.mod
+        cache-dependency-path: test/go.sum
+
+    - name: Build Tests
+      run: cd ./test && go test -c .
 
     - name: Execute Tests
       run: >
-        podman run --rm
+        docker run --rm
         -v $(pwd)/test:/test
         --privileged
         --security-opt="label=disable" ${{ env.TEST_IMAGE }}
-        /bin/sh -c "/usr/bin/kind create cluster -v 2147483647 --config ./test/kind-in-podman.yaml --wait 60s
+        /bin/sh -c "(/usr/bin/kind create cluster -v 2147483647 --config ./test/kind-in-podman.yaml --wait 60s --retain || (cat $(kind export logs) && podman ps -a))
         && kubectl get no -o wide
         && kubectl get ns
-        && cd ./test && go test . -v"
+        && cd ./test && ./test.test -test.v"
 
   release:
     runs-on: ubuntu-latest
