@@ -36,6 +36,9 @@ jobs:
     - name: Build Image
       run: podman build --format docker -f image/Containerfile -t ${{ env.TEST_IMAGE }} ./image
 
+    - name: Set up Go
+      uses: actions/setup-go@v5
+
     - name: Build Tests
       run: cd ./test && go test -c .
 
