@@ -34,7 +34,7 @@ jobs:
         sudo systemctl daemon-reload
 
     - name: Build Image
-      run: podman build --format docker -f image/Containerfile -t ${{ env.TEST_IMAGE }} ./image
+      run: docker build -f image/Containerfile -t ${{ env.TEST_IMAGE }} ./image
 
     - name: Set up Go
       uses: actions/setup-go@v5
@@ -47,7 +47,7 @@ jobs:
 
     - name: Execute Tests
       run: >
-        podman run --rm
+        docker run --rm
         -v $(pwd)/test:/test
         --privileged
         --security-opt="label=disable" ${{ env.TEST_IMAGE }}
