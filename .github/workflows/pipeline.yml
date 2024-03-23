@@ -22,7 +22,7 @@ jobs:
 
     - name: Sysctl
       run: |
-        sysctl -a | sort -h
+        sudo sysctl -a | sort -h
 
     - name: Configure
       run: |
