@@ -24,8 +24,11 @@ jobs:
       run: |
         sudo modprobe ip6_tables
         sudo modprobe ip6table_nat
+        sudo modprobe ip_tables
+        sudo modprobe iptable_nat
         sudo systemctl daemon-reload
         sudo sysctl -a | sort -h
+        sudo uname -a
 
     - name: Configure
       run: |
