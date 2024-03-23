@@ -48,7 +48,7 @@ jobs:
         /bin/sh -c "(/usr/bin/kind create cluster -v 2147483647 --config ./test/kind-in-podman.yaml --wait 60s --retain || (cat $(kind export logs) && podman ps -a))
         && kubectl get no -o wide
         && kubectl get ns
-        && cd ./test && ./test.test -v"
+        && cd ./test && ./test.test -test.v"
 
   release:
     runs-on: ubuntu-latest
