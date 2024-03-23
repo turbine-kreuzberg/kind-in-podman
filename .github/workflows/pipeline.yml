@@ -41,6 +41,8 @@ jobs:
         sudo touch /etc/systemd/system/user@.service.d/delegate.conf
         echo [Service] | sudo tee -a /etc/systemd/system/user@.service.d/delegate.conf
         echo Delegate=yes | sudo tee -a /etc/systemd/system/user@.service.d/delegate.conf
+        chmod 4755 /usr/bin/newgidmap
+        chmod 4755 /usr/bin/newuidmap
 
     - name: Build Image
       run: docker build -f image/Containerfile -t ${{ env.TEST_IMAGE }} ./image
