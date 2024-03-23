@@ -32,6 +32,7 @@ jobs:
         echo [Service] | sudo tee -a /etc/systemd/system/user@.service.d/delegate.conf
         echo Delegate=yes | sudo tee -a /etc/systemd/system/user@.service.d/delegate.conf
         sudo systemctl daemon-reload
+        sudo modprobe ip6_tables
 
     - name: Build Image
       run: docker build -f image/Containerfile -t ${{ env.TEST_IMAGE }} ./image
