@@ -20,6 +20,10 @@ jobs:
     - name: Clone repository
       uses: actions/checkout@v4
 
+    - name: Sysctl
+      run: |
+        sysctl -a | sort -h
+
     - name: Configure
       run: |
         sudo apt update
