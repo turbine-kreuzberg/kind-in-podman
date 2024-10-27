@@ -2,7 +2,6 @@ FROM ubuntu:22.04@sha256:0e5e4a57c2499249aafc3b40fcd541e9a456aab7296681a3994d631
 VOLUME /var/lib/containers/storage
 
 USER root
-ENV KIND_EXPERIMENTAL_PROVIDER=podman
 
 RUN apt update && \
     apt dist-upgrade -y && \
@@ -32,12 +31,21 @@ RUN cp /usr/share/containers/storage.conf /etc/containers/storage.conf && \
 
 COPY rootfs/lib/modules /lib/modules
 
-RUN curl -Lo /usr/bin/kind https://kind.sigs.k8s.io/dl/v0.20.0/kind-linux-amd64 && \
-    chmod +x /usr/bin/kind
+# kind
+ENV KIND_VERSION=v0.22.0
+ENV KIND_EXPERIMENTAL_PROVIDER=podman
+RUN curl -Lo /usr/bin/kind https://kind.sigs.k8s.io/dl/v0.20.0/kind-linux-amd64 \
+ && chmod +x /usr/bin/kind
 
-RUN curl -Lo /usr/bin/kubectl https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl && \
-    chmod +x /usr/bin/kubectl
+# kubectl
+ENV KUBECTL_VERSION=v1.29.3
+RUN curl -L --silent --fail -o /usr/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl \
+ && chmod +x /usr/bin/kubectl
 
 RUN curl -Lo /tmp/go.tar.gz https://go.dev/dl/go1.21.4.linux-amd64.tar.gz && \
     tar -C /usr/local -xzf /tmp/go.tar.gz
 ENV PATH=$PATH:/usr/local/go/bin
+
+RUN kind --version
+RUN kubectl version --client=true
+RUN podman --version
