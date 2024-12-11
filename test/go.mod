@@ -4,7 +4,7 @@ go 1.22.3
 
 require (
 	k8s.io/api v0.31.3
-	k8s.io/apimachinery v0.31.3
+	k8s.io/apimachinery v0.31.4
 	sigs.k8s.io/e2e-framework v0.5.0
 )
 
