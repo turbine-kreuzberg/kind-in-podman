@@ -2,7 +2,7 @@ module test
 
 go 1.23.0
 
-toolchain go1.23.4
+toolchain go1.27.1
 
 require (
 	k8s.io/api v0.31.4
